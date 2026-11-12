@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cadastro de Testadores Android</title>
+<style>
+  :root{--bg:#f4f6fb;--card:#fff;--txt:#1d2433;--mut:#667085;--pri:#2563eb;--bd:#d9dfeb;--err:#d92d20;--ok:#12b76a}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--txt);line-height:1.5}
+  .wrap{max-width:720px;margin:0 auto;padding:16px}
+  header{padding:24px 0 8px}
+  h1{font-size:1.6rem;margin:0 0 6px}
+  header p{margin:0;color:var(--mut)}
+  fieldset{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:18px;margin:16px 0}
+  legend{font-weight:700;padding:0 8px;font-size:1.05rem}
+  label{display:block;font-weight:600;margin:14px 0 6px;font-size:.95rem}
+  .hint{font-weight:400;color:var(--mut);font-size:.85rem}
+  input,select,textarea{width:100%;padding:11px 12px;border:1px solid var(--bd);border-radius:10px;font:inherit;background:#fff;color:inherit}
+  input:focus,select:focus,textarea:focus{outline:2px solid var(--pri);border-color:var(--pri)}
+  textarea{min-height:90px;resize:vertical}
+  .row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  @media(max-width:560px){.row{grid-template-columns:1fr}}
+  .checks{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:8px;margin-top:6px}
+  .checks label,.consent label{display:flex;gap:8px;align-items:flex-start;font-weight:400;margin:0;cursor:pointer}
+  .checks input,.consent input{width:auto;margin-top:4px}
+  .pix{border-color:var(--ok);border-width:2px}
+  .pix legend{color:var(--ok)}
+  button{width:100%;padding:14px;border:0;border-radius:12px;background:var(--pri);color:#fff;font-size:1.05rem;font-weight:700;cursor:pointer;margin:8px 0 24px}
+  button:hover{filter:brightness(1.08)}
+  .err{color:var(--err);font-size:.85rem;display:none;margin-top:4px}
+  .invalid+.err{display:block}
+  .invalid{border-color:var(--err)}
+  #ok{display:none;background:#ecfdf3;border:1px solid var(--ok);padding:16px;border-radius:12px;margin-bottom:24px}
+  #ok pre{white-space:pre-wrap;word-break:break-word;background:#fff;padding:10px;border-radius:8px;font-size:.8rem;max-height:240px;overflow:auto}
+  #ok button{width:auto;padding:10px 16px;margin:4px 6px 0 0;font-size:.9rem}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>📱 Cadastro de Testadores Android</h1>
+    <p>Teste apps, sistemas e SaaS no Android e seja remunerado. Preencha seus dados e dispositivo abaixo.</p>
+  </header>
+
+  <form id="f" novalidate>
+
+    <fieldset>
+      <legend>1. Dados pessoais</legend>
+      <label for="nome">Nome completo *</label>
+      <input id="nome" name="nome" required autocomplete="name">
+      <div class="err">Informe seu nome.</div>
+      <div class="row">
+        <div>
+          <label for="email">E-mail *</label>
+          <input id="email" name="email" type="email" required autocomplete="email">
+          <div class="err">Informe um e-mail válido.</div>
+        </div>
+        <div>
+          <label for="tel">WhatsApp / Telefone *</label>
+          <input id="tel" name="telefone" type="tel" required placeholder="(92) 90000-0000" autocomplete="tel">
+          <div class="err">Informe um telefone válido.</div>
+        </div>
+      </div>
+      <div class="row">
+        <div>
+          <label for="cidade">Cidade / UF</label>
+          <input id="cidade" name="cidade" autocomplete="address-level2">
+        </div>
+        <div>
+          <label for="idioma">Idiomas</label>
+          <input id="idioma" name="idiomas" placeholder="Português, Inglês...">
+        </div>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>2. Seu dispositivo Android</legend>
+      <div class="row">
+        <div>
+          <label for="marca">Marca *</label>
+          <input id="marca" name="marca" required placeholder="Samsung, Motorola, Xiaomi...">
+          <div class="err">Informe a marca.</div>
+        </div>
+        <div>
+          <label for="modelo">Modelo *</label>
+          <input id="modelo" name="modelo" required placeholder="Galaxy A54, Moto G84...">
+          <div class="err">Informe o modelo.</div>
+        </div>
+      </div>
+      <div class="row">
+        <div>
+          <label for="versao">Versão do Android *</label>
+          <select id="versao" name="versao_android" required>
+            <option value="">Selecione</option>
+            <option>Android 16</option><option>Android 15</option><option>Android 14</option>
+            <option>Android 13</option><option>Android 12</option><option>Android 11</option>
+            <option>Android 10 ou inferior</option><option>Não sei</option>
+          </select>
+          <div class="err">Selecione a versão.</div>
+        </div>
+        <div>
+          <label for="ram">Memória RAM</label>
+          <select id="ram" name="ram">
+            <option value="">Selecione</option>
+            <option>2 GB ou menos</option><option>3–4 GB</option><option>6 GB</option>
+            <option>8 GB</option><option>12 GB ou mais</option><option>Não sei</option>
+          </select>
+        </div>
+      </div>
+      <label for="conexao">Tipo de conexão que você usa <span class="hint">(pode marcar mais de um)</span></label>
+      <div class="checks" id="conexao">
+        <label><input type="checkbox" name="conexao" value="Wi-Fi"> Wi-Fi</label>
+        <label><input type="checkbox" name="conexao" value="4G"> 4G</label>
+        <label><input type="checkbox" name="conexao" value="5G"> 5G</label>
+      </div>
+      <label for="outros">Outros dispositivos disponíveis <span class="hint">(tablet, outro celular, etc.)</span></label>
+      <input id="outros" name="outros_dispositivos">
+    </fieldset>
+
+    <fieldset>
+      <legend>3. Experiência e disponibilidade</legend>
+      <label for="exp">Experiência com testes *</label>
+      <select id="exp" name="experiencia" required>
+        <option value="">Selecione</option>
+        <option>Nenhuma (iniciante)</option>
+        <option>Já testei apps como usuário/beta tester</option>
+        <option>Experiência com QA/testes profissionais</option>
+        <option>Desenvolvedor / Engenheiro de QA</option>
+      </select>
+      <div class="err">Selecione uma opção.</div>
+
+      <label>Tipos de teste que você faz</label>
+      <div class="checks">
+        <label><input type="checkbox" name="tipos" value="Usabilidade"> Usabilidade</label>
+        <label><input type="checkbox" name="tipos" value="Funcional"> Funcional</label>
+        <label><input type="checkbox" name="tipos" value="Exploratório"> Exploratório</label>
+        <label><input type="checkbox" name="tipos" value="Regressão"> Regressão</label>
+        <label><input type="checkbox" name="tipos" value="Desempenho"> Desempenho</label>
+        <label><input type="checkbox" name="tipos" value="Acessibilidade"> Acessibilidade</label>
+        <label><input type="checkbox" name="tipos" value="Segurança básica"> Segurança básica</label>
+        <label><input type="checkbox" name="tipos" value="Localização/idioma"> Localização/idioma</label>
+      </div>
+
+      <label>Categorias de app de interesse</label>
+      <div class="checks">
+        <label><input type="checkbox" name="categorias" value="Finanças"> Finanças</label>
+        <label><input type="checkbox" name="categorias" value="E-commerce"> E-commerce</label>
+        <label><input type="checkbox" name="categorias" value="Jogos"> Jogos</label>
+        <label><input type="checkbox" name="categorias" value="Saúde"> Saúde</label>
+        <label><input type="checkbox" name="categorias" value="Educação"> Educação</label>
+        <label><input type="checkbox" name="categorias" value="Produtividade/SaaS"> Produtividade / SaaS</label>
+        <label><input type="checkbox" name="categorias" value="Redes sociais"> Redes sociais</label>
+        <label><input type="checkbox" name="categorias" value="Outros"> Outros</label>
+      </div>
+
+      <div class="row">
+        <div>
+          <label for="horas">Horas disponíveis por semana *</label>
+          <select id="horas" name="horas_semana" required>
+            <option value="">Selecione</option>
+            <option>Até 2 h</option><option>3–5 h</option><option>6–10 h</option><option>Mais de 10 h</option>
+          </select>
+          <div class="err">Selecione uma opção.</div>
+        </div>
+        <div>
+          <label for="periodo">Melhor período</label>
+          <select id="periodo" name="periodo">
+            <option value="">Selecione</option>
+            <option>Manhã</option><option>Tarde</option><option>Noite</option><option>Fins de semana</option><option>Flexível</option>
+          </select>
+        </div>
+      </div>
+
+      <label for="gplay">Conta Google (e-mail) para convite de teste no Google Play <span class="hint">(opcional)</span></label>
+      <input id="gplay" name="conta_google" type="email" placeholder="seuemail@gmail.com">
+
+      <label for="obs">Algo mais que devemos saber?</label>
+      <textarea id="obs" name="observacoes" placeholder="Portfólio, links, ferramentas que domina, restrições..."></textarea>
+    </fieldset>
+
+    <fieldset class="pix">
+      <legend>4. 💸 Remuneração via Pix</legend>
+      <div class="row">
+        <div>
+          <label for="pixtipo">Tipo da chave Pix *</label>
+          <select id="pixtipo" name="pix_tipo" required>
+            <option value="">Selecione</option>
+            <option value="cpf">CPF</option>
+            <option value="cnpj">CNPJ</option>
+            <option value="email">E-mail</option>
+            <option value="tel">Telefone</option>
+            <option value="aleatoria">Chave aleatória</option>
+          </select>
+          <div class="err">Selecione o tipo.</div>
+        </div>
+        <div>
+          <label for="pix">Chave Pix *</label>
+          <input id="pix" name="pix_chave" required autocomplete="off">
+          <div class="err" id="pixerr">Informe uma chave Pix válida.</div>
+        </div>
+      </div>
+      <label for="pixnome">Nome do titular da conta *</label>
+      <input id="pixnome" name="pix_titular" required>
+      <div class="err">Informe o nome do titular.</div>
+      <p class="hint">Confira a chave com atenção: pagamentos feitos para uma chave informada errada podem não ser recuperáveis.</p>
+    </fieldset>
+
+    <div class="consent">
+      <label><input type="checkbox" id="lgpd" required>
+        <span>Autorizo o uso dos meus dados (incluindo a chave Pix) exclusivamente para cadastro, contato e pagamento pelos testes realizados, conforme a LGPD. *</span></label>
+      <div class="err" id="lgpderr">É necessário aceitar para continuar.</div>
+    </div>
+
+    <button type="submit">Enviar cadastro</button>
+  </form>
+
+  <div id="ok">
+    <strong>✅ Cadastro pronto!</strong>
+    <p id="okmsg"></p>
+    <pre id="out"></pre>
+    <button type="button" id="copy">Copiar</button>
+    <button type="button" id="dl">Baixar .json</button>
+  </div>
+</div>
+
+<script>
+// Para receber os cadastros automaticamente, coloque aqui a URL do seu endpoint
+// (ex.: Formspree, Google Apps Script, Make/Zapier webhook). Se vazio, os dados
+// ficam apenas na tela para copiar/baixar.
+const ENDPOINT = "";
+
+const $ = s => document.querySelector(s);
+const f = $("#f");
+
+function validaCPF(v){
+  v=v.replace(/\D/g,""); if(v.length!==11||/^(\d)\1+$/.test(v))return false;
+  for(let t=9;t<11;t++){let s=0;for(let i=0;i<t;i++)s+=v[i]*(t+1-i);
+    if(((s*10)%11)%10!=v[t])return false;} return true;
+}
+function validaCNPJ(v){
+  v=v.replace(/\D/g,""); if(v.length!==14||/^(\d)\1+$/.test(v))return false;
+  for(let t=12;t<14;t++){let s=0,p=t-7;for(let i=0;i<t;i++){s+=v[i]*p--;if(p<2)p=9;}
+    if(((s*10)%11)%10!=v[t])return false;} return true;
+}
+function validaPix(tipo,v){
+  v=v.trim();
+  switch(tipo){
+    case "cpf": return validaCPF(v);
+    case "cnpj": return validaCNPJ(v);
+    case "email": return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
+    case "tel": return /^(\+?55)?\s?\(?\d{2}\)?\s?9?\d{4}-?\d{4}$/.test(v);
+    case "aleatoria": return /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(v);
+  } return false;
+}
+
+f.addEventListener("submit", async e=>{
+  e.preventDefault();
+  let ok=true, first=null;
+  f.querySelectorAll("[required]").forEach(el=>{
+    let bad = el.type==="checkbox" ? !el.checked : !el.value.trim();
+    if(el.type==="email" && el.value && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(el.value)) bad=true;
+    if(el.id==="pix" && !bad && !validaPix($("#pixtipo").value, el.value)) bad=true;
+    el.classList.toggle("invalid",bad);
+    if(el.id==="lgpd") $("#lgpderr").style.display=bad?"block":"none";
+    if(bad){ok=false; first=first||el;}
+  });
+  if(!ok){first.scrollIntoView({behavior:"smooth",block:"center"});first.focus&&first.focus();return;}
+
+  const d = {};
+  new FormData(f).forEach((v,k)=>{ if(k in d){ d[k]=[].concat(d[k],v);} else d[k]=v; });
+  d.lgpd_aceite = true;
+  d.enviado_em = new Date().toISOString();
+  const json = JSON.stringify(d,null,2);
+
+  let msg = "Copie ou baixe os dados abaixo e envie para o responsável pelos testes.";
+  if(ENDPOINT){
+    try{
+      const r = await fetch(ENDPOINT,{method:"POST",headers:{"Content-Type":"application/json","Accept":"application/json"},body:json});
+      msg = r.ok ? "Cadastro enviado com sucesso! Entraremos em contato em breve." : "Não foi possível enviar automaticamente. Copie ou baixe os dados abaixo.";
+    }catch(_){ msg = "Falha de conexão. Copie ou baixe os dados abaixo."; }
+  }
+  $("#okmsg").textContent = msg;
+  $("#out").textContent = json;
+  $("#ok").style.display="block";
+  $("#ok").scrollIntoView({behavior:"smooth"});
+  $("#copy").onclick = ()=>navigator.clipboard.writeText(json).then(()=>$("#copy").textContent="Copiado ✓");
+  $("#dl").onclick = ()=>{
+    const a=document.createElement("a");
+    a.href=URL.createObjectURL(new Blob([json],{type:"application/json"}));
+    a.download="cadastro-testador.json"; a.click();
+  };
+});
+
+f.addEventListener("input",e=>e.target.classList.remove("invalid"));
+$("#pixtipo").addEventListener("change",e=>{
+  const ph={cpf:"000.000.000-00",cnpj:"00.000.000/0000-00",email:"seuemail@exemplo.com",tel:"+55 (92) 90000-0000",aleatoria:"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"};
+  $("#pix").placeholder = ph[e.target.value]||"";
+});
+</script>
+</body>
+</html>
